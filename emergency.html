@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Emergency Alert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="logo">🚨 Safety Alert</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Emergency Help Request</h1>
+    <p>If you're in danger, click the button below to send your location and emergency message.</p>
+    <button onclick="sendAlert()">HELP ME</button>
+  </div>
+  <!-- Buttons -->
+<!-- <button id="sos-button">🆘 Send SOS</button>
+<button id="audio-record-button">🎤 Record Audio</button>
+<button id="video-record-button">🎥 Record Video</button> -->
+
+<!-- Media Players -->
+<audio id="audio-player" controls style="display:none;"></audio>
+<video id="video-player" controls style="display:none; width: 100%; max-width: 300px;"></video>
+
+  <script src="script.js"></script>
+</body>
+</html>

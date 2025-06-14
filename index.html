@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SafeHer - Women's Safety Alert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background-color: #d63384;
+      padding: 1em 2em;
+      color: white;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5em;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .main-section {
+      text-align: center;
+      padding: 3em 1em;
+      background-color: #ffe6f0;
+    }
+
+    .main-section h1 {
+      font-size: 32px;
+      color: #d63384;
+    }
+
+    .help-btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 1em;
+      cursor: pointer;
+    }
+
+    .features {
+      padding: 3em 1em;
+      text-align: center;
+      background: #f9f9f9;
+    }
+
+    .feature-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+      margin-top: 2em;
+    }
+
+    .feature-box {
+      background: white;
+      padding: 1.5em;
+      width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: #333;
+      transition: transform 0.2s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .section {
+      text-align: center;
+      padding: 3em 1em;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #d63384;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 1em;
+    }
+
+    ul#tipsList li {
+      text-align: left;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🚨 SafeHer</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="emergency.html">Emergency</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main -->
+  <div class="main-section">
+    <h1>🚨 Women's Safety Alert</h1>
+    <p>Tap the button below to instantly send an emergency alert with your live location.</p>
+    <button onclick="sendAlert()" class="help-btn">HELP ME</button>
+    <audio id="alertSound" src="https://www.soundjay.com/transportation/sounds/police-siren-01.mp3" preload="auto"></audio>
+  </div>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>How SafeHer Helps You</h2>
+    <div class="feature-grid">
+      <a href="sos.html" class="feature-box">
+        <div>⚡</div>
+        <h3>One-Tap SOS</h3>
+        <p>Instant alert with location and siren.</p>
+      </a>
+      <a href="location.html" class="feature-box">
+        <div>📌</div>
+        <h3>Gpsenable</h3>
+        <p>Your Safety ,our priority</p>
+      </a>
+      <a href="mobile.html" class="feature-box">
+        <div>📱</div> 
+        <h3>Safe Locate</h3>
+        <p>Smart safety at your Finger Tips</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section">
+    <h2>About SafeHer</h2>
+    <p>We are committed to empowering women with real-time safety tools that save lives. Join us in building a safer world.</p>
+    <a href="about.html" class="btn">Learn More</a>
+  </section>
+
+  <!-- Safety Tips -->
+  <section class="section">
+    <h2>🛡️ Safety Tips</h2>
+    <p>Read practical tips to protect yourself in different situations.</p>
+    <a href="safetytips.html" class="btn">View Tips</a>
+  </section>
+
+  <!-- Contact -->
+  <section class="section">
+    <h2>Need Help?</h2>
+    <p>Have questions or feedback?</p>
+    <a href="contact.html" class="btn">Contact Us</a>
+  </section>
+
+  <script>
+    emailjs.init("REMHATuDX6DJpFY-9");
+
+    function sendAlert() {
+      if (!navigator.geolocation) {
+        alert("❌ Geolocation not supported.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const locationURL = `https://www.google.com/maps?q=${lat},${lon}`;
+          const currentTime = new Date().toLocaleString();
+
+          document.getElementById("alertSound")?.play();
+          if (navigator.vibrate) navigator.vibrate([300, 100, 300]);
+
+          const templateParams = {
+            name: "Emergency Alert",
+            time: currentTime,
+            location: locationURL,
+            message: "🚨 I am in danger. Please check my location immediately."
+          };
+
+          emailjs.send("service_wdrdkrv", "template_k0f9zue", templateParams)
+            .then(() => alert("✅ Alert sent successfully!"))
+            .catch((error) => {
+              console.error("❌ Failed:", error);
+              alert("❌ Could not send alert. Check connection or API key.");
+            });
+        },
+        () => {
+          alert("❌ Unable to get location. Please allow location access.");
+        }
+      );
+    }
+  </script>
+</body>
+</html>
